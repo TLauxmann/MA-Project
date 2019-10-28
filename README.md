@@ -1,5 +1,7 @@
 # MA-Project
 
+Unity Version 2019.2.10f1
+
 Wir benutzen Git Large File Storage.
 Die zugehörige .gitattributes für große Files von Unity habe ich bereits eingerichtet.
 Dennoch muss jeder git lfs herunterladen und in seinem lokalen Repository initialisieren.
