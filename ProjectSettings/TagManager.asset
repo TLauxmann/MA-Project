@@ -13,8 +13,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Ground
+  - Player
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Bg
+    uniqueID: 1283252623
+    locked: 0
+  - name: Deko
+    uniqueID: 4052340289
+    locked: 0
+  - name: Player
+    uniqueID: 1675873591
+    locked: 0
+  - name: Fg
+    uniqueID: 647298905
     locked: 0
