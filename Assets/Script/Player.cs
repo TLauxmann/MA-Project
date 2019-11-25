@@ -13,7 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] float fallMultiplier = 2.5f;
     [SerializeField] float lowJumpMultiplier = 2f;
     [SerializeField] Vector2 deathKick = new Vector2(25f, 25f);
-    
+    [SerializeField] bool activePlayer = true;
+
+
     //private float timer = 0;
     //private float timerMax = 0;
 
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
     BoxCollider2D myFeet;
     Joystick myjoystick;
     JumpButton myjumpbutton;
+    SwitchPlayerButton switchPlayerButton;
 
 
 
@@ -42,24 +45,26 @@ public class Player : MonoBehaviour
         myFeet = GetComponent<BoxCollider2D>();
         myjoystick = FindObjectOfType<Joystick>();
         myjumpbutton = FindObjectOfType<JumpButton>();
-
-
-
+        switchPlayerButton = FindObjectOfType<SwitchPlayerButton>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //switch Player for testing only
+        if (switchPlayerButton.Pressed)
+        {
+            activePlayer = !activePlayer;
+        }
+
         if (!isAlive) { return; }
 
-
-
-        Run();
-        //FlipSprite();
-
-        Jump();
-
-        //Review();
+        //for offline testing
+        if (activePlayer)
+        {
+            Run();
+            Jump();
+        }
     }
 
 
@@ -74,9 +79,7 @@ public class Player : MonoBehaviour
         myRigidBody.velocity = playerVelocity;
 
 
-
-        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
-        myAnimator.SetBool("Running", playerHasHorizontalSpeed);
+        myAnimator.SetFloat("Speed", Mathf.Abs(myRigidBody.velocity.x));
 
 
         // If the input is moving the player right and the player is facing left...
@@ -94,9 +97,6 @@ public class Player : MonoBehaviour
 
     }
 
-
-
-
     private void Flip()
     {
 
@@ -109,14 +109,22 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (!myFeet.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
+        if (!myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            return;
+        }
+        else
+        {
+            myAnimator.SetBool("IsJumping", false);
+        }
 
-        
+
 
         if (myjumpbutton.Pressed == true)
         {
             Vector2 jumpVelocityToAdd = new Vector2(0f, jumpSpeed);
             myRigidBody.velocity += jumpVelocityToAdd;
+            myAnimator.SetBool("IsJumping", true);
         }
 
 
@@ -126,7 +134,6 @@ public class Player : MonoBehaviour
         }
         else if (myRigidBody.velocity.y > 0 && !Input.GetButton("Jump"))
         {
-
             myRigidBody.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
 
