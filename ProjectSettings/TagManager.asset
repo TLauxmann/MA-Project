@@ -15,7 +15,7 @@ TagManager:
   - 
   - Ground
   - Player
-  - 
+  - Hazard
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: Fg
     uniqueID: 647298905
+    locked: 0
+  - name: Water
+    uniqueID: 2348032885
     locked: 0

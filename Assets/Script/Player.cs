@@ -10,10 +10,11 @@ public class Player : MonoBehaviour
 
     [SerializeField] float runSpeed = 3f;
     [SerializeField] float jumpSpeed = 5f;
-    [SerializeField] float fallMultiplier = 2.5f;
-    [SerializeField] float lowJumpMultiplier = 2f;
+    //[SerializeField] float fallMultiplier = 2.5f;
+    //[SerializeField] float lowJumpMultiplier = 2f;
     [SerializeField] Vector2 deathKick = new Vector2(25f, 25f);
     [SerializeField] bool activePlayer = true;
+    public GameObject camera;
 
 
     //private float timer = 0;
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
         myjoystick = FindObjectOfType<Joystick>();
         myjumpbutton = FindObjectOfType<JumpButton>();
         switchPlayerButton = FindObjectOfType<SwitchPlayerButton>();
+
     }
 
     // Update is called once per frame
@@ -56,6 +58,7 @@ public class Player : MonoBehaviour
         {
             activePlayer = !activePlayer;
         }
+        CameraHandling();
 
         if (!isAlive) { return; }
 
@@ -64,9 +67,19 @@ public class Player : MonoBehaviour
         {
             Run();
             Jump();
+            Die();
         }
     }
 
+    private void CameraHandling(){
+        if (activePlayer == true) {
+            camera.SetActive(true);
+        }
+        if (activePlayer == false) {
+            camera.SetActive(false);
+        }
+
+    }
 
 
     private void Run()
@@ -128,7 +141,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (myRigidBody.velocity.y < 0)
+        /*if (myRigidBody.velocity.y < 0)
         {
             myRigidBody.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
@@ -136,8 +149,17 @@ public class Player : MonoBehaviour
         {
             myRigidBody.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
+        */
 
 
+    }
+
+    private void Die() {
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Hazard"))) {
+            isAlive = false;
+            myAnimator.SetTrigger("Dying");
+            myRigidBody.velocity = deathKick;
+        }
     }
 
 }
