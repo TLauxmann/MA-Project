@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     // State
     bool isAlive = true;
     float gravityScaleAtStart;
-    bool facingRight = true;
+    public bool facingRight = true;
 
     Rigidbody2D myRigidBody;
     Animator myAnimator;
@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     Joystick myjoystick;
     JumpButton myjumpbutton;
     SwitchPlayerButton switchPlayerButton;
+    AttackButton myattackbutton;
 
 
 
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
         myjoystick = FindObjectOfType<Joystick>();
         myjumpbutton = FindObjectOfType<JumpButton>();
         switchPlayerButton = FindObjectOfType<SwitchPlayerButton>();
+        myattackbutton = FindObjectOfType<AttackButton>();
 
     }
 
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour
             Run();
             Jump();
             Die();
+            Attack();
         }
     }
 
@@ -159,6 +162,19 @@ public class Player : MonoBehaviour
             isAlive = false;
             myAnimator.SetTrigger("Dying");
             myRigidBody.velocity = deathKick;
+        }
+    }
+
+    private void Attack()
+    {
+
+        if (myattackbutton.Pressed == true)
+        {
+            WeaponScript weapon = GetComponent<WeaponScript>();
+            if (weapon != null)
+            {
+                weapon.Attack();
+            }
         }
     }
 
