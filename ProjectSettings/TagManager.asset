@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Fire
+  - Grabbable
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - Ground
   - Player
   - Hazard
-  - 
-  - 
+  - Grabbable
+  - Pickable
   - 
   - 
   - 
@@ -55,4 +57,10 @@ TagManager:
     locked: 0
   - name: Water
     uniqueID: 2348032885
+    locked: 0
+  - name: Grabbable
+    uniqueID: 3931783617
+    locked: 0
+  - name: Pickable
+    uniqueID: 290966455
     locked: 0

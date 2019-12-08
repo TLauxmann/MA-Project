@@ -29,11 +29,12 @@ public class Player : MonoBehaviour
     Rigidbody2D myRigidBody;
     Animator myAnimator;
     CapsuleCollider2D myBodyCollider;
-    BoxCollider2D myFeet;
+    CircleCollider2D myFeet;
     Joystick myjoystick;
     JumpButton myjumpbutton;
     SwitchPlayerButton switchPlayerButton;
     AttackButton myattackbutton;
+    GrabButton mygrabbutton;
 
 
 
@@ -44,11 +45,12 @@ public class Player : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
-        myFeet = GetComponent<BoxCollider2D>();
+        myFeet = GetComponent<CircleCollider2D>();
         myjoystick = FindObjectOfType<Joystick>();
         myjumpbutton = FindObjectOfType<JumpButton>();
         switchPlayerButton = FindObjectOfType<SwitchPlayerButton>();
         myattackbutton = FindObjectOfType<AttackButton>();
+        mygrabbutton = FindObjectOfType<GrabButton>();
 
     }
 
@@ -71,6 +73,7 @@ public class Player : MonoBehaviour
             Jump();
             Die();
             Attack();
+            Grab();
         }
     }
 
@@ -162,6 +165,8 @@ public class Player : MonoBehaviour
             isAlive = false;
             myAnimator.SetTrigger("Dying");
             myRigidBody.velocity = deathKick;
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
+
         }
     }
 
@@ -176,6 +181,10 @@ public class Player : MonoBehaviour
                 weapon.Attack();
             }
         }
+    }
+
+    private void Grab()
+    {
     }
 
 }
